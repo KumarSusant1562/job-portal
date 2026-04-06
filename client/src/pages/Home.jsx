@@ -40,6 +40,19 @@ const Home = () => {
     }
   };
 
+  const handleGetStartedClick = () => {
+    if (user && user.role === 'jobseeker') {
+      // User is already logged in as jobseeker, go to dashboard
+      navigate('/jobseeker-dashboard');
+    } else if (user && user.role === 'recruiter') {
+      // User is logged in as recruiter, go to recruiter dashboard
+      navigate('/recruiter-dashboard');
+    } else {
+      // User is not logged in, go to register page
+      navigate('/register');
+    }
+  };
+
   return (
     <div className="home">
       {/* Hero Section */}
@@ -144,9 +157,9 @@ const Home = () => {
         <div className="cta-content">
           <h2>Ready to Start Your Journey?</h2>
           <p>Join thousands of professionals finding their dream jobs</p>
-          <Link to="/register" className="cta-btn">
+          <button onClick={handleGetStartedClick} className="cta-btn">
             Get Started Today
-          </Link>
+          </button>
         </div>
       </section>
     </div>

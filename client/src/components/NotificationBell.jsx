@@ -85,10 +85,11 @@ const NotificationBell = ({ socket }) => {
     }
 
     // Navigate based on notification type
-    if (notification.jobId) {
-      navigate(`/jobs/${notification.jobId}`);
+    if (notification.type === 'job_posted' && notification.relatedId) {
+      // Navigate to job details page
+      navigate(`/jobs/${notification.relatedId}`);
       setIsOpen(false);
-    } else if (notification.applicationId) {
+    } else if (notification.type === 'application_status' || notification.type === 'new_application') {
       // For job seekers, go to dashboard
       if (user.role === 'jobseeker') {
         navigate('/jobseeker-dashboard');
@@ -96,8 +97,9 @@ const NotificationBell = ({ socket }) => {
         navigate('/recruiter-dashboard?section=applications');
       }
       setIsOpen(false);
-    } else if (notification.redirectUrl) {
-      navigate(notification.redirectUrl);
+    } else if (notification.link) {
+      // Use the link field as fallback
+      navigate(notification.link);
       setIsOpen(false);
     }
   };

@@ -1,32 +1,50 @@
 import React, { useState } from 'react';
+import SearchSuggestions from './SearchSuggestions';
 import '../styles/JobFilter.css';
 
 const JobFilter = ({ onFilter }) => {
   const [location, setLocation] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
   const [jobType, setJobType] = useState('');
   const [salary, setSalary] = useState('');
 
   const handleFilter = () => {
-    onFilter({ location, jobType, salary });
+    onFilter({ location, title: jobTitle, jobType, salary });
   };
 
   const clearFilters = () => {
     setLocation('');
+    setJobTitle('');
     setJobType('');
     setSalary('');
     onFilter({});
   };
 
+  const handleJobTitleSelect = (value) => {
+    setJobTitle(value);
+  };
+
+  const handleLocationSelect = (value) => {
+    setLocation(value);
+  };
+
   return (
     <div className="job-filter">
       <h3>Filter Jobs</h3>
+      
+      <div className="filter-group">
+        <label>Job Title</label>
+        <SearchSuggestions 
+          onSelect={handleJobTitleSelect}
+          type="title"
+        />
+      </div>
+
       <div className="filter-group">
         <label>Location</label>
-        <input
-          type="text"
-          placeholder="Search by location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
+        <SearchSuggestions 
+          onSelect={handleLocationSelect}
+          type="location"
         />
       </div>
 
