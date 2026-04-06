@@ -52,11 +52,12 @@ exports.createJob = async (req, res) => {
 // @access  Public
 exports.getAllJobs = async (req, res) => {
   try {
-    const { location, salary, jobType, page = 1, limit = 10 } = req.query;
+    const { location, title, salary, jobType, page = 1, limit = 10 } = req.query;
 
     // Build filter object
     let filter = {};
-    if (location) filter.location = location;
+    if (location) filter.location = new RegExp(location, 'i'); // Case-insensitive search
+    if (title) filter.title = new RegExp(title, 'i'); // Case-insensitive search
     if (jobType) filter.jobType = jobType;
     if (salary) filter.salary = { $gte: parseInt(salary) };
 
@@ -161,6 +162,84 @@ exports.getRecruiterJobs = async (req, res) => {
     const jobs = await Job.find({ postedBy: req.user._id });
 
     res.status(200).json({ success: true, count: jobs.length, data: jobs });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    Get search suggestions for job titles and locations
+// @route   GET /api/jobs/search/suggestions
+// @access  Public
+exports.getSearchSuggestions = async (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query || query.length < 1) {
+      return res.status(200).json({ success: true, data: { titles: [], locations: [] } });
+    }
+
+    // Create a regex pattern for case-insensitive partial matching
+    const searchPattern = new RegExp(query, 'i');
+
+    // Get unique job titles that match the search
+    const titleSuggestions = await Job.aggregate([
+      {
+        $match: {
+          title: searchPattern,
+        },
+      },
+      {
+        $group: {
+          _id: '$title',
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+      {
+        $limit: 10,
+      },
+      {
+        $project: {
+          _id: 0,
+          title: '$_id',
+        },
+      },
+    ]);
+
+    // Get unique locations that match the search
+    const locationSuggestions = await Job.aggregate([
+      {
+        $match: {
+          location: searchPattern,
+        },
+      },
+      {
+        $group: {
+          _id: '$location',
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+      {
+        $limit: 10,
+      },
+      {
+        $project: {
+          _id: 0,
+          location: '$_id',
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        titles: titleSuggestions.map((s) => s.title),
+        locations: locationSuggestions.map((s) => s.location),
+      },
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
