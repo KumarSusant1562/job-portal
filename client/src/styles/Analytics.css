@@ -1,39 +1,41 @@
 .analytics-container {
-  padding: 30px;
+  padding: 32px;
 }
 
 .analytics-container h2 {
-  margin-bottom: 30px;
-  font-size: 1.8rem;
+  margin-bottom: 32px;
+  font-size: 1.6rem;
   font-weight: 700;
+  letter-spacing: -0.3px;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 40px;
 }
 
 .stat-card {
-  background: var(--lighter-bg);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
+  background: white;
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  gap: 20px;
-  transition: all 0.3s ease;
+  gap: 24px;
+  transition: all 0.25s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-color);
 }
 
 .stat-icon {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
 }
 
 .stat-content {
@@ -41,22 +43,23 @@
 }
 
 .stat-value {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--primary-color);
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .stat-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
+  font-weight: 500;
 }
 
 .analytics-section {
-  background: var(--lighter-bg);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
+  background: white;
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
   margin-bottom: 25px;
 }
@@ -269,4 +272,96 @@
     width: 100%;
     justify-content: space-between;
   }
+}
+
+/* Dark mode styles */
+html.dark-mode .analytics-container h2 {
+  color: #ffffff;
+}
+
+html.dark-mode .stat-card {
+  background: #262626;
+  border-color: #404040;
+}
+
+html.dark-mode .stat-card:hover {
+  border-color: #67d5ff;
+}
+
+html.dark-mode .stat-value {
+  color: #67d5ff;
+}
+
+html.dark-mode .stat-label {
+  color: #999999;
+}
+
+html.dark-mode .analytics-section {
+  background: #262626;
+  border-color: #404040;
+}
+
+html.dark-mode .analytics-section h3 {
+  color: #ffffff;
+}
+
+html.dark-mode .status-label {
+  color: #c0c0c0;
+}
+
+html.dark-mode .status-count {
+  color: #999999;
+}
+
+html.dark-mode .status-name {
+  color: #e0e0e0;
+}
+
+html.dark-mode .top-job-item {
+  background: #2a2a2a;
+}
+
+html.dark-mode .job-name {
+  color: #67d5ff;
+}
+
+html.dark-mode .job-applications {
+  color: #999999;
+}
+
+html.dark-mode .applications-badge {
+  background: linear-gradient(135deg, #0860d6 0%, #067cfd 100%);
+}
+
+html.dark-mode .application-item {
+  background: #2a2a2a;
+  border-left-color: #67d5ff;
+}
+
+html.dark-mode .applicant-name {
+  color: #ffffff;
+}
+
+html.dark-mode .applicant-email {
+  color: #999999;
+}
+
+html.dark-mode .status-badge {
+  background-color: #404040;
+  color: #e0e0e0;
+}
+
+html.dark-mode .status-badge.status-pending {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #ffd700;
+}
+
+html.dark-mode .status-badge.status-accepted {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #52c41a;
+}
+
+html.dark-mode .status-badge.status-rejected {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #ff6b6b;
 }

@@ -3,9 +3,14 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
-  const { user } = useContext(AuthContext);
+  const { user, token, loading } = useContext(AuthContext);
 
-  if (!user) {
+  // If still loading, show loading state instead of redirecting
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (!user || !token) {
     return <Navigate to="/login" />;
   }
 

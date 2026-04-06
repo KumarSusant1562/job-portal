@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { notificationAPI } from '../services/api';
 import '../styles/NotificationBell.css';
 
 const NotificationBell = ({ socket }) => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -76,6 +78,30 @@ const NotificationBell = ({ socket }) => {
     }
   };
 
+  const handleNotificationClick = async (notification) => {
+    // Mark as read if not already read
+    if (!notification.isRead) {
+      await handleMarkAsRead(notification._id);
+    }
+
+    // Navigate based on notification type
+    if (notification.jobId) {
+      navigate(`/jobs/${notification.jobId}`);
+      setIsOpen(false);
+    } else if (notification.applicationId) {
+      // For job seekers, go to dashboard
+      if (user.role === 'jobseeker') {
+        navigate('/jobseeker-dashboard');
+      } else if (user.role === 'recruiter') {
+        navigate('/recruiter-dashboard?section=applications');
+      }
+      setIsOpen(false);
+    } else if (notification.redirectUrl) {
+      navigate(notification.redirectUrl);
+      setIsOpen(false);
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -110,7 +136,8 @@ const NotificationBell = ({ socket }) => {
                 <div
                   key={notification._id}
                   className={`notification-item ${!notification.isRead ? 'unread' : ''}`}
-                  onClick={() => !notification.isRead && handleMarkAsRead(notification._id)}
+                  onClick={() => handleNotificationClick(notification)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className="notification-icon">{notification.icon}</div>
 

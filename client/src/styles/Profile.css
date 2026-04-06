@@ -1,24 +1,24 @@
 .profile-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 40px 20px;
 }
 
 .profile-card {
-  background: var(--lighter-bg);
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   border: 1px solid var(--border-color);
 }
 
 .profile-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #0860d6 0%, #067cfd 100%);
   color: white;
-  padding: 40px;
+  padding: 48px;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 32px;
   flex-wrap: wrap;
   position: relative;
 }
@@ -33,14 +33,14 @@
   border-radius: 50%;
   border: 4px solid white;
   object-fit: cover;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .profile-picture-placeholder {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border: 3px dashed white;
   display: flex;
   align-items: center;
@@ -54,30 +54,35 @@
 
 .profile-basic h1 {
   color: white;
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
 }
 
 .role-badge {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   color: white;
   padding: 6px 12px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .email {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .edit-btn {
   background: white;
   color: var(--primary-color);
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 10px 22px;
+  border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -243,4 +248,83 @@
   .cancel-btn {
     width: 100%;
   }
+}
+
+/* Dark mode styles */
+html.dark-mode .profile-card {
+  background: #262626;
+  border-color: #404040;
+}
+
+html.dark-mode .profile-header h1 {
+  color: #ffffff;
+}
+
+html.dark-mode .detail-row {
+  border-bottom-color: #404040;
+}
+
+html.dark-mode .detail-row .label {
+  color: #67d5ff;
+}
+
+html.dark-mode .detail-row .value {
+  color: #c0c0c0;
+}
+
+html.dark-mode .form-group label {
+  color: #e0e0e0;
+}
+
+html.dark-mode .form-group input,
+html.dark-mode .form-group textarea {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  border-color: #404040;
+}
+
+html.dark-mode .form-group input::placeholder,
+html.dark-mode .form-group textarea::placeholder {
+  color: #808080;
+}
+
+html.dark-mode .form-group input:focus,
+html.dark-mode .form-group textarea:focus {
+  border-color: #67d5ff;
+  box-shadow: 0 0 0 3px rgba(103, 213, 255, 0.1);
+}
+
+html.dark-mode .file-selected {
+  color: #52c41a;
+}
+
+html.dark-mode .save-btn {
+  background: linear-gradient(135deg, #0860d6 0%, #067cfd 100%);
+}
+
+html.dark-mode .save-btn:hover {
+  box-shadow: 0 6px 20px rgba(103, 213, 255, 0.3);
+}
+
+html.dark-mode .cancel-btn {
+  background: #2a2a2a;
+  color: #c0c0c0;
+  border-color: #404040;
+}
+
+html.dark-mode .cancel-btn:hover {
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+html.dark-mode .error-message {
+  background-color: rgba(227, 29, 71, 0.15);
+  color: #ff6b6b;
+  border-left-color: #ff6b6b;
+}
+
+html.dark-mode .success-message {
+  background-color: rgba(52, 211, 153, 0.15);
+  color: #52c41a;
+  border-left-color: #52c41a;
 }

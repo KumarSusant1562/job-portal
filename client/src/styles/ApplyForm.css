@@ -1,26 +1,29 @@
 .apply-form {
-  background: var(--lighter-bg);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
-  margin-top: 20px;
+  background: white;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  margin-top: 24px;
   border: 1px solid var(--border-color);
 }
 
 .apply-form h3 {
-  color: var(--primary-color);
-  margin-bottom: 20px;
-  font-size: 1.3rem;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  font-size: 1.2rem;
   font-weight: 700;
+  letter-spacing: -0.2px;
 }
 
 .apply-form .error-message {
-  background-color: #fee;
+  background-color: #fef0f0;
   color: var(--danger-color);
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  border-left: 4px solid var(--danger-color);
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--danger-color);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .apply-form .form-group {
@@ -32,32 +35,35 @@
   margin-bottom: 8px;
   font-weight: 600;
   color: var(--text-dark);
+  font-size: 0.85rem;
+  letter-spacing: 0.2px;
 }
 
 .apply-form .form-group input[type='file'] {
-  padding: 16px;
+  padding: 14px;
   border: 2px dashed var(--primary-color);
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  background-color: var(--light-bg);
-  transition: all 0.3s ease;
+  background-color: #f5f7ff;
+  transition: all 0.25s ease;
 }
 
 .apply-form .form-group input[type='file']:hover {
-  background-color: rgba(10, 102, 194, 0.05);
+  background-color: #eef3ff;
+  border-color: #067cfd;
 }
 
 .apply-form button {
   width: 100%;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
   color: white;
-  padding: 16px;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 15px;
+  transition: all 0.25s ease;
+  margin-top: 16px;
   border: none;
 }
 
@@ -75,4 +81,46 @@
   .apply-form {
     padding: 20px;
   }
+}
+
+/* Dark mode styles */
+html.dark-mode .apply-form {
+  background: #262626;
+  border-color: #404040;
+}
+
+html.dark-mode .apply-form h3 {
+  color: #ffffff;
+}
+
+html.dark-mode .apply-form .error-message {
+  background-color: rgba(227, 29, 71, 0.15);
+  color: #ff6b6b;
+  border-left-color: #ff6b6b;
+}
+
+html.dark-mode .apply-form .form-group label {
+  color: #e0e0e0;
+}
+
+html.dark-mode .apply-form .form-group input[type='file'] {
+  background-color: #2a2a2a;
+  border-color: #67d5ff;
+}
+
+html.dark-mode .apply-form .form-group input[type='file']:hover {
+  background-color: rgba(103, 213, 255, 0.1);
+}
+
+html.dark-mode .apply-form button {
+  background: linear-gradient(135deg, #0860d6 0%, #067cfd 100%);
+}
+
+html.dark-mode .apply-form button:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(103, 213, 255, 0.3);
+}
+
+html.dark-mode .apply-form button:disabled {
+  background: #606060;
+  opacity: 0.5;
 }

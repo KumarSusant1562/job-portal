@@ -1,21 +1,22 @@
 .job-listings {
-  padding: 30px 0;
-  max-width: 1400px;
+  padding: 40px 0;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 .job-listings h1 {
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 2.2rem;
+  margin-bottom: 48px;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--text-dark);
+  letter-spacing: -0.3px;
 }
 
 .listings-container {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 30px;
+  grid-template-columns: 260px 1fr;
+  gap: 32px;
 }
 
 .filter-section {
@@ -31,32 +32,35 @@
 
 .jobs-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
 }
 
 .loading {
   text-align: center;
-  padding: 40px;
-  font-size: 1.1rem;
+  padding: 60px 40px;
+  font-size: 1rem;
   color: var(--text-muted);
+  font-weight: 500;
 }
 
 .no-jobs {
   text-align: center;
-  padding: 60px 40px;
-  font-size: 1.1rem;
+  padding: 80px 40px;
+  font-size: 1rem;
   color: var(--text-muted);
-  background: var(--lighter-bg);
-  border-radius: 12px;
+  background: white;
+  border-radius: 8px;
   border: 2px dashed var(--border-color);
+  font-weight: 500;
 }
 
 .jobs-count {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
   margin-bottom: 20px;
   font-weight: 500;
+  letter-spacing: 0.2px;
 }
 
 @media (max-width: 1024px) {
@@ -81,4 +85,19 @@
   .jobs-list {
     grid-template-columns: 1fr;
   }
+}
+
+/* Dark mode styles */
+html.dark-mode .job-listings h1 {
+  color: #ffffff;
+}
+
+html.dark-mode .no-jobs {
+  background: #262626;
+  border-color: #404040;
+  color: #c0c0c0;
+}
+
+html.dark-mode .jobs-count {
+  color: #999999;
 }

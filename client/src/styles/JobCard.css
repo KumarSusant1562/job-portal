@@ -1,9 +1,9 @@
 .job-card {
-  background: var(--lighter-bg);
-  border-radius: 12px;
+  background: white;
+  border-radius: 8px;
   padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
   border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
@@ -14,15 +14,16 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 4px;
+  height: 3px;
   width: 0;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  transition: width 0.25s ease;
 }
 
 .job-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--primary-color);
 }
 
 .job-card:hover::before {
@@ -34,16 +35,17 @@
 }
 
 .job-header h3 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--primary-color);
   margin-bottom: 6px;
   font-weight: 600;
+  letter-spacing: 0.2px;
 }
 
 .company {
   color: var(--text-muted);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .job-details {
@@ -54,7 +56,7 @@
 }
 
 .job-details p {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   margin: 0;
 }
@@ -66,17 +68,17 @@
 
 .description {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   margin-bottom: 16px;
-  min-height: 45px;
+  min-height: 40px;
 }
 
 .view-btn {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
   color: white;
-  padding: 12px 20px;
-  border-radius: 24px;
+  padding: 10px 20px;
+  border-radius: 6px;
   text-align: center;
   display: inline-block;
   transition: all 0.3s ease;
@@ -99,4 +101,35 @@
   .job-header h3 {
     font-size: 1rem;
   }
+}
+
+/* Dark mode styles */
+html.dark-mode .job-card {
+  background: #262626;
+  border-color: #404040;
+}
+
+html.dark-mode .job-card:hover {
+  border-color: #67d5ff;
+  background: #2a2a2a;
+}
+
+html.dark-mode .job-header h3 {
+  color: #67d5ff;
+}
+
+html.dark-mode .company {
+  color: #999999;
+}
+
+html.dark-mode .job-details p {
+  color: #c0c0c0;
+}
+
+html.dark-mode .job-details strong {
+  color: #ffffff;
+}
+
+html.dark-mode .description {
+  color: #b0b0b0;
 }

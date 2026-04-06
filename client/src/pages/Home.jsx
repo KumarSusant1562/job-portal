@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import JobCard from '../components/JobCard';
+import { AuthContext } from '../context/AuthContext';
 import { jobAPI } from '../services/api';
 import '../styles/Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const [latestJobs, setLatestJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,6 +26,20 @@ const Home = () => {
     }
   };
 
+  const handlePostJobClick = () => {
+    if (user && user.role === 'recruiter') {
+      // User is already logged in as recruiter, go to dashboard
+      navigate('/recruiter-dashboard');
+    } else if (user && user.role === 'jobseeker') {
+      // User is logged in as jobseeker, show alert
+      alert('Please log in as a recruiter to post a job. You can switch roles when you create a new account.');
+      navigate('/register?role=recruiter');
+    } else {
+      // User is not logged in, go to register page
+      navigate('/register?role=recruiter');
+    }
+  };
+
   return (
     <div className="home">
       {/* Hero Section */}
@@ -34,9 +51,9 @@ const Home = () => {
             <Link to="/jobs" className="hero-btn primary">
               🔍 Browse Jobs
             </Link>
-            <Link to="/register?role=recruiter" className="hero-btn secondary">
+            <button onClick={handlePostJobClick} className="hero-btn secondary">
               📢 Post a Job
-            </Link>
+            </button>
           </div>
         </div>
       </section>

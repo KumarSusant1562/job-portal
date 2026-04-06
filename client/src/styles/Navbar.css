@@ -1,7 +1,7 @@
 .navbar {
   background-color: var(--lighter-bg);
   border-bottom: 1px solid var(--border-color);
-  padding: 12px 0;
+  padding: 10px 0;
   box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
@@ -9,47 +9,51 @@
 }
 
 .navbar-container {
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .navbar-logo {
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: -0.5px;
+  color: var(--primary-color);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.2s ease;
 }
 
 .navbar-logo:hover {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 32px;
 }
 
 .nav-link {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.3s ease;
-  padding: 8px 0;
+  transition: all 0.2s ease;
+  padding: 8px 4px;
   border-bottom: 2px solid transparent;
+  position: relative;
 }
 
 .nav-link:hover {
+  color: var(--primary-color);
+}
+
+.nav-link.active {
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
 }
@@ -57,46 +61,51 @@
 .nav-link.signup {
   background-color: var(--primary-color);
   color: white;
-  padding: 10px 20px;
-  border-radius: 24px;
+  padding: 8px 18px;
+  border-radius: 6px;
   border: none;
   border-bottom: none;
+  font-weight: 600;
 }
 
 .nav-link.signup:hover {
-  background-color: var(--primary-dark);
+  background-color: #0750c0;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .nav-user {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .nav-user span {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .logout-btn {
-  background-color: var(--danger-color);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 24px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  background-color: transparent;
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border: 1px solid var(--text-muted);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .logout-btn:hover {
-  background-color: #c0392b;
-  box-shadow: var(--shadow-md);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
 }
 
 .theme-toggle {
   background: transparent;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
@@ -126,4 +135,51 @@
     justify-content: center;
     gap: 10px;
   }
+}
+
+/* Dark mode styles */
+html.dark-mode .navbar-logo {
+  color: #67d5ff;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+}
+
+html.dark-mode .nav-link {
+  color: #c0c0c0;
+}
+
+html.dark-mode .nav-link:hover,
+html.dark-mode .nav-link.active {
+  color: #67d5ff;
+}
+
+html.dark-mode .nav-link.signup {
+  background-color: #0860d6;
+  color: #ffffff;
+}
+
+html.dark-mode .nav-link.signup:hover {
+  background-color: #067cfd;
+  box-shadow: 0 4px 12px rgba(6, 124, 253, 0.3);
+}
+
+html.dark-mode .logout-btn {
+  color: #e0e0e0;
+  border-color: #606060;
+}
+
+html.dark-mode .logout-btn:hover {
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+html.dark-mode .theme-toggle {
+  color: #f5f5f5;
+}
+
+html.dark-mode .theme-toggle:hover {
+  background-color: #333333;
 }
