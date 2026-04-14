@@ -15,6 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 
 .navbar-logo {
@@ -37,6 +38,28 @@
   display: flex;
   align-items: center;
   gap: 32px;
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text-dark);
+  border-radius: 999px;
 }
 
 .nav-link {
@@ -118,22 +141,68 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 12px 0;
+  }
+
   .navbar-container {
-    flex-direction: column;
-    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   .nav-menu {
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
+    display: none;
     width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px;
+    margin-top: 6px;
+    background: var(--lighter-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .nav-link,
+  .nav-link.signup,
+  .theme-toggle,
+  .logout-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nav-link.signup {
+    padding: 12px 18px;
+  }
+
+  .nav-menu .notification-bell-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-menu .notification-bell {
+    width: 100%;
+    border-radius: 12px;
   }
 
   .nav-user {
     width: 100%;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
@@ -182,4 +251,19 @@ html.dark-mode .theme-toggle {
 
 html.dark-mode .theme-toggle:hover {
   background-color: #333333;
+}
+
+html.dark-mode .nav-toggle {
+  border-color: #404040;
+}
+
+html.dark-mode .nav-toggle span {
+  background: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  html.dark-mode .nav-menu {
+    background: #1a1a1a;
+    border-color: #404040;
+  }
 }

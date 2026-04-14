@@ -18,6 +18,20 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Handle expired/invalid auth globally to avoid repeated fetch failures.
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error?.response?.status;
+    if (status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.dispatchEvent(new Event('auth-logout'));
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Auth APIs
 export const authAPI = {
   register: (data) => api.post('/auth/register', data),

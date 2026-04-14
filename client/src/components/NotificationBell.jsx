@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { notificationAPI } from '../services/api';
@@ -11,6 +11,25 @@ const NotificationBell = ({ socket }) => {
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const isNotificationVisibleForRole = (notification) => {
+    if (!user) return false;
+    if (user.role === 'jobseeker') {
+      return notification.type !== 'new_application';
+    }
+    return true;
+  };
+
+  const visibleNotifications = useMemo(
+    () => notifications.filter((notification) => isNotificationVisibleForRole(notification)),
+    [notifications, user]
+  );
+
+  const visibleUnreadCount = useMemo(
+    () => visibleNotifications.filter((notification) => !notification.isRead).length,
+    [visibleNotifications]
+  );
 
   useEffect(() => {
     if (user && socket) {
@@ -29,10 +48,24 @@ const NotificationBell = ({ socket }) => {
 
     return () => {
       if (socket) {
+        if (user?._id) {
+          socket.emit('user_disconnected', user._id);
+        }
         socket.off('new_notification');
       }
     };
   }, [user, socket]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   const fetchNotifications = async () => {
     try {
@@ -107,21 +140,21 @@ const NotificationBell = ({ socket }) => {
   if (!user) return null;
 
   return (
-    <div className="notification-bell-container">
+    <div className="notification-bell-container" ref={dropdownRef}>
       <button
         className="notification-bell"
         onClick={() => setIsOpen(!isOpen)}
         title="Notifications"
       >
         🔔
-        {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
+        {visibleUnreadCount > 0 && <span className="notification-badge">{visibleUnreadCount}</span>}
       </button>
 
       {isOpen && (
         <div className="notification-dropdown">
           <div className="notification-header">
             <h3>Notifications</h3>
-            {unreadCount > 0 && (
+            {visibleUnreadCount > 0 && (
               <button className="mark-all-btn" onClick={handleMarkAllAsRead}>
                 Mark all as read
               </button>
@@ -129,12 +162,12 @@ const NotificationBell = ({ socket }) => {
           </div>
 
           <div className="notification-list">
-            {notifications.length === 0 ? (
+            {visibleNotifications.length === 0 ? (
               <div className="empty-state">
                 <p>📭 No notifications yet</p>
               </div>
             ) : (
-              notifications.map((notification) => (
+              visibleNotifications.map((notification) => (
                 <div
                   key={notification._id}
                   className={`notification-item ${!notification.isRead ? 'unread' : ''}`}
@@ -167,10 +200,17 @@ const NotificationBell = ({ socket }) => {
             )}
           </div>
 
-          {notifications.length > 0 && (
-            <a href="/notifications" className="view-all-notifications">
+          {visibleNotifications.length > 0 && (
+            <button
+              type="button"
+              className="view-all-notifications"
+              onClick={() => {
+                setIsOpen(false);
+                navigate('/notifications');
+              }}
+            >
               View all notifications →
-            </a>
+            </button>
           )}
         </div>
       )}

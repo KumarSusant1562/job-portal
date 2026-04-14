@@ -51,6 +51,7 @@
 @media (max-width: 768px) {
   .pagination {
     gap: 6px;
+    margin: 32px 0;
   }
 
   .pagination-btn {

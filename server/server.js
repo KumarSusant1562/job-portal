@@ -33,9 +33,6 @@ app.locals.io = io;
 app.locals.sendNotificationToUser = sendNotificationToUser;
 app.locals.broadcastNotification = broadcastNotification;
 
-// Connect to database
-connectDB();
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -65,6 +62,18 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+const startServer = async () => {
+  try {
+    await connectDB();
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Server startup failed because MongoDB is not reachable.');
+    console.error('Set MONGO_URI in server/.env or start local MongoDB on 127.0.0.1:27017.');
+    process.exit(1);
+  }
+};
+
+startServer();

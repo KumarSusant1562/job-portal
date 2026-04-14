@@ -21,6 +21,14 @@
   color: var(--primary-color);
 }
 
+.notification-bell:focus-visible,
+.view-all-notifications:focus-visible,
+.mark-all-btn:focus-visible,
+.delete-notification-btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
 .notification-badge {
   position: absolute;
   top: -2px;
@@ -241,6 +249,7 @@
   text-decoration: none;
   background: var(--lighter-bg);
   border-radius: 0 0 12px 12px;
+  width: 100%;
 }
 
 .view-all-notifications:hover {
@@ -249,8 +258,8 @@
 
 @media (max-width: 768px) {
   .notification-dropdown {
-    width: 320px;
-    right: -20px;
+    width: min(92vw, 360px);
+    right: 0;
   }
 
   .notification-item {
@@ -342,4 +351,11 @@ html.dark-mode .view-all-notifications {
 
 html.dark-mode .view-all-notifications:hover {
   background-color: #2a2a2a;
+}
+
+html.dark-mode .notification-bell:focus-visible,
+html.dark-mode .view-all-notifications:focus-visible,
+html.dark-mode .mark-all-btn:focus-visible,
+html.dark-mode .delete-notification-btn:focus-visible {
+  outline-color: #67d5ff;
 }

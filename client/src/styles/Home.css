@@ -286,6 +286,12 @@
 }
 
 @media (max-width: 768px) {
+  .hero,
+  .cta {
+    padding: 72px 22px;
+    border-radius: 16px;
+  }
+
   .hero-content h1 {
     font-size: 2.2rem;
   }
@@ -298,6 +304,13 @@
     flex-direction: column;
   }
 
+  .hero-btn.primary,
+  .hero-btn.secondary,
+  .cta-btn {
+    width: 100%;
+    text-align: center;
+  }
+
   .jobs-grid {
     grid-template-columns: 1fr;
   }
@@ -308,6 +321,12 @@
 
   .stat-value {
     font-size: 2rem;
+  }
+
+  .stats,
+  .features {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 

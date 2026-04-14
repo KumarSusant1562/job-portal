@@ -14,7 +14,19 @@ export const AuthProvider = ({ children }) => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+
+    const handleAuthLogout = () => {
+      setToken(null);
+      setUser(null);
+      window.dispatchEvent(new Event('auth-user-changed'));
+    };
+
+    window.addEventListener('auth-logout', handleAuthLogout);
     setLoading(false);
+
+    return () => {
+      window.removeEventListener('auth-logout', handleAuthLogout);
+    };
   }, []);
 
   const register = async (name, email, password, role) => {
@@ -25,6 +37,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(response.data.user));
       setToken(response.data.token);
       setUser(response.data.user);
+      window.dispatchEvent(new Event('auth-user-changed'));
       return { success: true };
     } catch (error) {
       return { success: false, error: error.response?.data?.message || 'Registration failed' };
@@ -41,6 +54,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(response.data.user));
       setToken(response.data.token);
       setUser(response.data.user);
+      window.dispatchEvent(new Event('auth-user-changed'));
       return { success: true };
     } catch (error) {
       return { success: false, error: error.response?.data?.message || 'Login failed' };
@@ -54,6 +68,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
     setToken(null);
     setUser(null);
+    window.dispatchEvent(new Event('auth-user-changed'));
   };
 
   return (

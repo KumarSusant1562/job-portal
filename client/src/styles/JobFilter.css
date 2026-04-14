@@ -6,6 +6,12 @@
   border: 1px solid var(--border-color);
 }
 
+.job-filter,
+.filter-group input,
+.filter-group select {
+  min-width: 0;
+}
+
 .job-filter h3 {
   margin-bottom: 24px;
   color: var(--text-dark);
@@ -88,6 +94,14 @@
 }
 
 @media (max-width: 768px) {
+  .job-filter {
+    padding: 20px;
+  }
+
+  .filter-group {
+    margin-bottom: 18px;
+  }
+
   .filter-buttons {
     flex-direction: column;
   }

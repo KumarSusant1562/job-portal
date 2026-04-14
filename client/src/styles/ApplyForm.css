@@ -7,6 +7,10 @@
   border: 1px solid var(--border-color);
 }
 
+.apply-form input[type='file'] {
+  min-width: 0;
+}
+
 .apply-form h3 {
   color: var(--text-dark);
   margin-bottom: 24px;
@@ -80,6 +84,10 @@
 @media (max-width: 768px) {
   .apply-form {
     padding: 20px;
+  }
+
+  .apply-form button {
+    padding: 14px 12px;
   }
 }
 

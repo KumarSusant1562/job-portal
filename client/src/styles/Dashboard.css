@@ -259,6 +259,11 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard {
+    padding: 20px 0;
+    gap: 20px;
+  }
+
   .section {
     padding: 20px;
   }
@@ -280,6 +285,15 @@
 
   .saved-jobs-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    align-items: stretch;
+  }
+
+  .post-job-btn {
+    width: 100%;
+    text-align: center;
   }
 }
 

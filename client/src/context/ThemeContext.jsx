@@ -18,38 +18,40 @@ export const ThemeProvider = ({ children }) => {
         console.error('Error parsing user from localStorage:', error);
       }
     }
-    return 'theme';
+    return 'theme_guest';
+  };
+
+  const applyThemeFromStorage = () => {
+    const themeKey = getThemeKey();
+    const savedTheme = localStorage.getItem(themeKey);
+
+    if (savedTheme) {
+      const dark = savedTheme === 'dark';
+      setIsDarkMode(dark);
+      document.documentElement.classList.toggle('dark-mode', dark);
+    } else {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark-mode');
+    }
   };
 
   // Load theme preference from localStorage on mount and when user changes
   useEffect(() => {
-    const themeKey = getThemeKey();
-    const savedTheme = localStorage.getItem(themeKey);
-    
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-      document.documentElement.classList.toggle('dark-mode', savedTheme === 'dark');
-    } else {
-      // Default to light mode
-      setIsDarkMode(false);
-      document.documentElement.classList.remove('dark-mode');
-    }
+    applyThemeFromStorage();
   }, []);
 
   // Listen for storage changes to sync theme across tabs/windows
   useEffect(() => {
-    const handleStorageChange = () => {
-      const themeKey = getThemeKey();
-      const savedTheme = localStorage.getItem(themeKey);
-      
-      if (savedTheme) {
-        setIsDarkMode(savedTheme === 'dark');
-        document.documentElement.classList.toggle('dark-mode', savedTheme === 'dark');
-      }
-    };
+    const handleStorageChange = () => applyThemeFromStorage();
+    const handleAuthUserChange = () => applyThemeFromStorage();
 
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener('auth-user-changed', handleAuthUserChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('auth-user-changed', handleAuthUserChange);
+    };
   }, []);
 
   const toggleTheme = () => {

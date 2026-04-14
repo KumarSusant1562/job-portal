@@ -30,7 +30,7 @@ const RecruiterDashboard = () => {
     if (section === 'my-jobs') {
       fetchRecruiterJobs();
     } else if (section === 'applications') {
-      fetchApplications();
+      initializeApplicationsSection();
     }
   }, [section]);
 
@@ -46,21 +46,36 @@ const RecruiterDashboard = () => {
     }
   };
 
-  const fetchApplications = async () => {
+  const initializeApplicationsSection = async () => {
     setLoading(true);
     try {
-      if (selectedJobForApps) {
-        const response = await applicationAPI.getJobApplications(selectedJobForApps);
-        setApplications(response.data.data);
-      } else if (jobs.length > 0) {
-        const response = await applicationAPI.getJobApplications(jobs[0]._id);
-        setApplications(response.data.data);
+      const jobsResponse = await jobAPI.getRecruiterJobs();
+      const recruiterJobs = jobsResponse.data.data || [];
+      setJobs(recruiterJobs);
+
+      if (recruiterJobs.length > 0) {
+        const defaultJobId = recruiterJobs[0]._id;
+        setSelectedJobForApps(defaultJobId);
+        await fetchApplicationsForJob(defaultJobId);
+      } else {
+        setSelectedJobForApps(null);
+        setApplications([]);
       }
     } catch (error) {
       setError('Failed to fetch applications');
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchApplicationsForJob = async (jobId) => {
+    if (!jobId) {
+      setApplications([]);
+      return;
+    }
+
+    const response = await applicationAPI.getJobApplications(jobId);
+    setApplications(response.data.data || []);
   };
 
   const handlePostJob = async (e) => {
@@ -161,11 +176,14 @@ const RecruiterDashboard = () => {
             <div>
               <label>Select Job:</label>
               <select
+                value={selectedJobForApps || ''}
                 onChange={(e) => {
-                  setSelectedJobForApps(e.target.value);
-                  if (e.target.value) {
-                    fetchApplications();
-                  }
+                  const jobId = e.target.value || null;
+                  setSelectedJobForApps(jobId);
+                  setLoading(true);
+                  fetchApplicationsForJob(jobId)
+                    .catch(() => setError('Failed to fetch applications'))
+                    .finally(() => setLoading(false));
                 }}
               >
                 <option value="">Choose a job</option>

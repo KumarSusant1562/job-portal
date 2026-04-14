@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import NotificationBell from './NotificationBell';
@@ -9,10 +9,21 @@ const Navbar = ({ socket }) => {
   const { user, logout } = useContext(AuthContext);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname, location.search]);
 
   const handleLogout = () => {
+    setMenuOpen(false);
     logout();
     navigate('/');
+  };
+
+  const handleNavClick = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -22,23 +33,34 @@ const Navbar = ({ socket }) => {
           <span>💼 Job Portal</span>
         </Link>
 
-        <div className="nav-menu">
-          <Link to="/jobs" className="nav-link">
+        <button
+          className="nav-toggle"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-expanded={menuOpen}
+          aria-label="Toggle navigation menu"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <div className={`nav-menu ${menuOpen ? 'open' : ''}`}>
+          <Link to="/jobs" className="nav-link" onClick={handleNavClick}>
             Jobs
           </Link>
 
           {user ? (
             <>
               {user.role === 'recruiter' ? (
-                <Link to="/recruiter-dashboard" className="nav-link">
+                <Link to="/recruiter-dashboard" className="nav-link" onClick={handleNavClick}>
                   Dashboard
                 </Link>
               ) : (
                 <>
-                  <Link to="/jobseeker-dashboard" className="nav-link">
+                  <Link to="/jobseeker-dashboard" className="nav-link" onClick={handleNavClick}>
                     My Applications
                   </Link>
-                  <Link to="/profile" className="nav-link">
+                  <Link to="/profile" className="nav-link" onClick={handleNavClick}>
                     Profile
                   </Link>
                 </>
@@ -46,7 +68,14 @@ const Navbar = ({ socket }) => {
 
               <NotificationBell socket={socket} />
 
-              <button className="theme-toggle" onClick={toggleTheme} title="Toggle dark mode">
+              <button
+                className="theme-toggle"
+                onClick={() => {
+                  toggleTheme();
+                  handleNavClick();
+                }}
+                title="Toggle dark mode"
+              >
                 {isDarkMode ? '☀️' : '🌙'}
               </button>
 
@@ -59,13 +88,20 @@ const Navbar = ({ socket }) => {
             </>
           ) : (
             <>
-              <button className="theme-toggle" onClick={toggleTheme} title="Toggle dark mode">
+              <button
+                className="theme-toggle"
+                onClick={() => {
+                  toggleTheme();
+                  handleNavClick();
+                }}
+                title="Toggle dark mode"
+              >
                 {isDarkMode ? '☀️' : '🌙'}
               </button>
-              <Link to="/login" className="nav-link">
+              <Link to="/login" className="nav-link" onClick={handleNavClick}>
                 Login
               </Link>
-              <Link to="/register" className="nav-link signup">
+              <Link to="/register" className="nav-link signup" onClick={handleNavClick}>
                 Sign Up
               </Link>
             </>

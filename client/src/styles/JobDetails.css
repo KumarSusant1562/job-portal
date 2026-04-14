@@ -129,6 +129,10 @@
 }
 
 @media (max-width: 768px) {
+  .job-details {
+    padding: 16px 0 24px;
+  }
+
   .job-header {
     flex-direction: column;
     gap: 15px;
@@ -139,11 +143,16 @@
   }
 
   .job-details-container {
-    padding: 25px;
+    padding: 22px;
   }
 
   .job-header h1 {
     font-size: 1.5rem;
+  }
+
+  .save-btn,
+  .apply-btn {
+    width: 100%;
   }
 }
 
